@@ -1,0 +1,212 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2025-12-14T14:22:07+01:00",
+    "name": "the_riftbreaker_dedicatedserver",
+    "author": "pascal20999@gmail.com",
+    "description": "Dedicated server for the game \"The Riftbreaker\", this does not use anything standard as any other eggs. This is a extremely experimental egg just to get \"The RiftBreaker - Dedicated Server\" running while the devs make a proper container.",
+    "features": null,
+    "docker_images": {
+        "ghcr.io\/xntry\/riftbreaker-proton-autostart:latest": "ghcr.io\/xntry\/riftbreaker-proton-autostart:latest"
+    },
+    "file_denylist": [],
+    "startup": "''",
+    "config": {
+        "files": "{}",
+        "startup": "{}",
+        "logs": "{}",
+        "stop": "^C"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!\/bin\/bash\r\n\r\n# SteamCMD fails otherwise for some reason, even running as root.\r\n# This is changed at the end of the install process anyways.\r\nchown -R root:root \/mnt\r\nexport HOME=\/mnt\/server\r\n\r\n## set up 32 bit libraries\r\nmkdir -p \/mnt\/server\/.steam\/sdk32\r\ncp -v linux32\/steamclient.so ..\/.steam\/sdk32\/steamclient.so\r\n\r\n## set up 64 bit libraries\r\nmkdir -p \/mnt\/server\/.steam\/sdk64\r\ncp -v linux64\/steamclient.so ..\/.steam\/sdk64\/steamclient.so\r\n\r\n## add below your custom commands if needed\r\n\r\n## install end\r\necho \"-----------------------------------------\"\r\necho \"Installation completed...\"\r\necho \"-----------------------------------------\"",
+            "container": "ghcr.io\/ptero-eggs\/installers:debian",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "Steam App ID",
+            "description": "Steam App ID of The Riftbreaker Dedicated Server",
+            "env_variable": "SRCDS_APPID",
+            "default_value": "4114030",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|in:4114030",
+            "field_type": "text"
+        },
+        {
+            "name": "Steam User",
+            "description": "",
+            "env_variable": "STEAM_USER",
+            "default_value": "anonymous",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "string",
+            "field_type": "text"
+        },
+        {
+            "name": "Steam Password",
+            "description": "",
+            "env_variable": "STEAM_PASS",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "string",
+            "field_type": "text"
+        },
+        {
+            "name": "XVFB",
+            "description": "",
+            "env_variable": "XVFB",
+            "default_value": "1",
+            "user_viewable": true,
+            "user_editable": false,
+            "rules": "required|integer",
+            "field_type": "text"
+        },
+        {
+            "name": "Set display width",
+            "description": "",
+            "env_variable": "DISPLAY_WIDTH",
+            "default_value": "1024",
+            "user_viewable": true,
+            "user_editable": false,
+            "rules": "required|integer",
+            "field_type": "text"
+        },
+        {
+            "name": "Set display height",
+            "description": "",
+            "env_variable": "DISPLAY_HEIGHT",
+            "default_value": "768",
+            "user_viewable": true,
+            "user_editable": false,
+            "rules": "required|integer",
+            "field_type": "text"
+        },
+        {
+            "name": "Set display depth",
+            "description": "",
+            "env_variable": "DISPLAY_DEPTH",
+            "default_value": "16",
+            "user_viewable": true,
+            "user_editable": false,
+            "rules": "required|integer",
+            "field_type": "text"
+        },
+        {
+            "name": "Auto Starter",
+            "description": "This enables a script that will press the \"Start Game\" button for you",
+            "env_variable": "AUTOCLICK",
+            "default_value": "1",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|integer",
+            "field_type": "text"
+        },
+        {
+            "name": "window",
+            "description": "",
+            "env_variable": "AUTOCLICK_WINDOW_REGEX",
+            "default_value": "The Riftbreaker|Dedicated Server",
+            "user_viewable": true,
+            "user_editable": false,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "timeout",
+            "description": "",
+            "env_variable": "AUTOCLICK_TIMEOUT",
+            "default_value": "90",
+            "user_viewable": true,
+            "user_editable": false,
+            "rules": "required|integer",
+            "field_type": "text"
+        },
+        {
+            "name": "Extra proton library's",
+            "description": "Install additional library's",
+            "env_variable": "PROTON_WINETRICKS",
+            "default_value": "vcrun2022",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Auto update",
+            "description": "Auto updates the game or not",
+            "env_variable": "AUTO_UPDATE",
+            "default_value": "1",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "WIndows Install",
+            "description": "Much needed library's",
+            "env_variable": "WINDOWS_INSTALL",
+            "default_value": "1",
+            "user_viewable": true,
+            "user_editable": false,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "screenshot",
+            "description": "if enabled, makes a screenshot from before and after starting the server (debugging)",
+            "env_variable": "AUTOCLICK_SCREENSHOT",
+            "default_value": "0",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:20",
+            "field_type": "text"
+        },
+        {
+            "name": "Enable novnc",
+            "description": "Make's it so you can interact with the container through a web GUI (port 6080 is needed by default if NoVNC port is not changed)",
+            "env_variable": "NOVNC_ENABLE",
+            "default_value": "1",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "NoVNC port",
+            "description": "",
+            "env_variable": "NOVNC_PORT",
+            "default_value": "6080",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "vnc port",
+            "description": "Needed for internal communication with the container",
+            "env_variable": "VNC_PORT",
+            "default_value": "5900",
+            "user_viewable": true,
+            "user_editable": false,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "vnc password",
+            "description": "make it as secure as you want",
+            "env_variable": "VNC_PASSWORD",
+            "default_value": "secretpassword",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
+            "field_type": "text"
+        }
+    ]
+}
